@@ -8,6 +8,14 @@ ORIENTATIONS = [
     ('west', 'West')
 ]
 
+PROPERTY_STATE = [
+    ('new', 'New'),
+    ('offer_received', 'Offer received'),
+    ('offer_accepted', 'Offer accepted'),
+    ('sold', 'Sold'),
+    ('canceled', 'Canceled')
+]
+
 class EstateProperty(models.Model):
     _name = "estate.property"
     _description = "An estate property"
@@ -29,3 +37,8 @@ class EstateProperty(models.Model):
         selection=ORIENTATIONS
     )
     active = fields.Boolean('Active', default=True)
+    state = fields.Selection(
+        string='Status',
+        selection=PROPERTY_STATE,
+        default='new'
+    )
