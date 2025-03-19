@@ -22,7 +22,7 @@ class EstateProperty(models.Model):
 
     name = fields.Char('Propertys name', required=True)
     description = fields.Text('Description')
-    postcode = fields.Char('Pstcode')
+    postcode = fields.Char('Postcode')
     date_availability = fields.Date('Aailability', copy=False, default=fields.Date.today() + timedelta(days=90))
     expected_price = fields.Float('Excpected price', required=True)
     selling_price = fields.Float('Selling price', readonly=True, copy=False)
