@@ -25,3 +25,6 @@ class EstatePropertyOffer(models.Model):
         string='Property',
         required=True
     )
+
+    validity = fields.Integer('Validity (days)', default=7)
+    date_deadline = fields.Date('Deadline')
