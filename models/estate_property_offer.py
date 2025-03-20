@@ -46,8 +46,7 @@ class EstatePropertyOffer(models.Model):
 
     @api.onchange('date_deadline')
     def _onchange_date_deadline(self):
-        for record in self:
-            if record.date_deadline:
-                record.validity = (record.date_deadline - fields.Date.today()).days
-            else:
-                record.validity = 0
+        if self.date_deadline:
+            self.validity = (self.date_deadline - fields.Date.today()).days
+        else:
+            self.validity = 0
