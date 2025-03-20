@@ -66,6 +66,8 @@
                                     <field name="validity"/>
                                     <field name="date_deadline"/>
                                     <field name="status"/>
+                                    <button name="accept_offer" type="object" string="Accept" class="btn-primary"/>
+                                    <button name="refuse_offer" type="object" string="Refuse" class="btn-danger"/>
                                 </list>
                             </field>
                         </page>
