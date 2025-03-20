@@ -54,6 +54,14 @@ class EstatePropertyOffer(models.Model):
 
     def accept_offer(self):
         for record in self:
+            existing_accepted_offer = self.search([
+                ('status', '=', 'accepted'),
+                ('id', '!=', record.id),
+            ], limit=1)
+
+            if existing_accepted_offer:
+                raise UserError('Another offer has already been accepted')
+            
             if record.status != 'accepted':
                 record.status = 'accepted'
                 record.property_id.selling_price = record.price
