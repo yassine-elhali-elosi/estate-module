@@ -1,5 +1,5 @@
 from odoo import models, fields, api
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
 from datetime import timedelta
 
 ORIENTATIONS = [
@@ -116,3 +116,9 @@ class EstateProperty(models.Model):
                 raise UserError('You cannot sell a canceled property')
 
         return True
+    
+    @api.constrains('selling_price', 'expected_price')
+    def _check_selling_price(self):
+        for record in self:
+            if record.selling_price and record.expected_price:
+                if record.selling_price
