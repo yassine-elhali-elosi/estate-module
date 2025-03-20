@@ -1,5 +1,6 @@
 from odoo import models, fields, api
 from odoo.exceptions import UserError, ValidationError
+from odoo.tools.float_utils import float_compare, float_is_zero
 from datetime import timedelta
 
 ORIENTATIONS = [
@@ -116,10 +117,10 @@ class EstateProperty(models.Model):
                 raise UserError('You cannot sell a canceled property')
 
         return True
-    
+
     @api.constrains('selling_price', 'expected_price')
     def _check_selling_price(self):
         for record in self:
-            if record.selling_price and record.expected_price:
-                if record.selling_price < record.expected_price * 0.9:
-                    raise ValidationError('The selling price must be at least 90% of the expected price')
+            if not float_is_zero(record.selling_price, precision_digits=2):
+                if float_compare(record.selling_price, record.expected_price * 0.9, precision_digits=2) < 0:
+                    raise ValidationError('The selling price must be at least 90% of the expected price.')
