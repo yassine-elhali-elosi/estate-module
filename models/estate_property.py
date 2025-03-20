@@ -96,10 +96,12 @@ class EstateProperty(models.Model):
 
     def cancel_property(self):
         for record in self:
-            record.state = 'canceled'
+            if record.state != 'sold':
+                record.state = 'canceled'
         return True
     
     def sold_property(self):
         for record in self:
-            record.state = 'sold'
+            if record.state != 'canceled':
+                record.state = 'sold'
         return True
