@@ -62,7 +62,7 @@ class EstateProperty(models.Model):
         default=lambda self: self.env.user
     )
 
-    tag_ids = fields.Many2many(
+    tag_ids = fields.Many2many( # relation name
         'estate.property.tag',
         string='Tags'
     )
@@ -121,4 +121,5 @@ class EstateProperty(models.Model):
     def _check_selling_price(self):
         for record in self:
             if record.selling_price and record.expected_price:
-                if record.selling_price
+                if record.selling_price < record.expected_price * 0.9:
+                    raise ValidationError('The selling price must be at least 90% of the expected price')
