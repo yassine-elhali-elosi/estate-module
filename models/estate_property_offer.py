@@ -95,8 +95,16 @@ class EstatePropertyOffer(models.Model):
             
     @api.model
     def create(self, values):
-        print(values)
-        if 'property_id' in values:
+        if 'property_id' in values and 'price' in values:
+            existing_offer = self.search([
+                ('property_id', '=', values['property_id']),
+                ('price', '>=', values['price'])
+            ], limit=1)
+
+            if existing_offer:
+                raise UserError('You cannot create an offer with a price lower than an existing one')
+
             property_record = self.env['estate.property'].browse(values['property_id'])
             property_record.state = 'offer_received'
+            
         return super(EstatePropertyOffer, self).create(values)
