@@ -15,7 +15,7 @@ class EstatePropertyOffer(models.Model):
     ]
     _order = "price desc"
 
-    price = fields.Float('Price', required=True)
+    price = fields.Float('Price')
     status = fields.Selection(
         string='Status',
         selection=STATUS,
@@ -92,3 +92,11 @@ class EstatePropertyOffer(models.Model):
                     record.property_id.buyer = None
             else:
                 raise UserError('This offer has already been refused')
+            
+    @api.model
+    def create(self, values):
+        print(values)
+        if 'property_id' in values:
+            property_record = self.env['estate.property'].browse(values['property_id'])
+            property_record.state = 'offer_received'
+        return super(EstatePropertyOffer, self).create(values)
