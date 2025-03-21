@@ -4,7 +4,7 @@
         <field name="name">estate.property.list</field>
         <field name="model">estate.property</field>
         <field name="arch" type="xml">
-            <list string="Channel">
+            <list string="Channel" decoration-success="state in ('offer_received', 'offer_accepted')" decoration-bf="state == 'offer_accepted'">
                 <field name="name"/>
                 <field name="postcode"/>
                 <field name="bedrooms"/>
