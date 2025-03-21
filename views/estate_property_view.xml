@@ -60,7 +60,7 @@
                             </group>
                         </page>
                         <page string="Offers">
-                            <field name="offer_ids" context="{'default_model': 'estate.property.offer'}">
+                            <field name="offer_ids" context="{'default_model': 'estate.property.offer'}" readonly="state in ('offer_accepted', 'sold', 'canceled')">
                                 <list ref="estate_property_offer_view_list"/>
                             </field>
                         </page>
