@@ -24,6 +24,7 @@
                 <header>
                     <button name="cancel_property" type="object" string="Cancel Property" class="btn-danger"/>
                     <button name="sold_property" type="object" string="Mark as Sold" class="btn-primary"/>
+                    <field name="state" widget="statusbar"/>
                 </header>
                 <sheet>
                     <h1>
@@ -34,7 +35,6 @@
                     </group>
                     <group>
                         <group>
-                            <field name="state" widget="statusbar"/>
                             <field name="property_type_id"/>
                             <field name="postcode"/>
                             <field name="date_availability"/>
