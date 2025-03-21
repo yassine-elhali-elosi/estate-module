@@ -25,6 +25,7 @@ class EstateProperty(models.Model):
         ('check_expected_price', 'CHECK(expected_price > 0)', 'The property expected price should be strictly positive'),
         ('check_selling_price', 'CHECK(selling_price >= 0)', 'The property selling price should be positive')
     ]
+    _order = "id desc"
 
     name = fields.Char('Propertys name', required=True)
     description = fields.Text('Description')
