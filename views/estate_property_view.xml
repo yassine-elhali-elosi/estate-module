@@ -60,16 +60,8 @@
                             </group>
                         </page>
                         <page string="Offers">
-                            <field name="offer_ids" readonly="state in ('offer_accepted', 'sold', 'canceled')">
-                                <list>
-                                    <field name="price"/>
-                                    <field name="partner_id"/>'
-                                    <field name="validity"/>
-                                    <field name="date_deadline"/>
-                                    <field name="status"/>
-                                    <button name="accept_offer" type="object" string="Accept" class="btn-primary" invisible="status in ('accepted', 'refused')"/>
-                                    <button name="refuse_offer" type="object" string="Refuse" class="btn-danger" invisible="status in ('accepted', 'refused')"/>
-                                </list>
+                            <field name="offer_ids" context="{'default_model': 'estate.property.offer'}">
+                                <list ref="estate_property_offer_view_list"/>
                             </field>
                         </page>
                         <page string="Other Info">
