@@ -87,7 +87,6 @@ class EstatePropertyOffer(models.Model):
             if record.status != 'refused':
                 record.status = 'refused'
                 if record.property_id.state != 'new':
-                    record.property_id.state = 'new'
                     record.property_id.selling_price = 0
                     record.property_id.buyer = None
             else:
