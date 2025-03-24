@@ -66,7 +66,7 @@ class EstatePropertyOffer(models.Model):
         for record in self:
             existing_accepted_offer = self.search([
                 ('status', '=', 'accepted'),
-                ('property_id', '=', self.property_id.id),
+                ('property_id', '=', record.property_id.id),
             ], limit=1)
 
             if existing_accepted_offer:
