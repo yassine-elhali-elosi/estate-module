@@ -1,5 +1,5 @@
 {
-    'name': 'Real Estate',
+    'name': 'Estate Account',
     'depends': ['estate', 'account'],
     'application': True
 }
