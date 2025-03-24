@@ -19,4 +19,13 @@
         <field name="property_id" ref="property1"/>
         <field name="partner_id" ref="base.res_partner_2"/>
     </record>
+
+    <!-- Validation automatique des offres après création -->
+    <function model="estate.property.offer" name="accept_offer">
+        <value eval="[ref('offer3')]"/>
+    </function>
+
+    <function model="estate.property.offer" name="refuse_offer">
+        <value eval="[ref('offer1'), ref('offer2')]"/>
+    </function>
 </odoo>
