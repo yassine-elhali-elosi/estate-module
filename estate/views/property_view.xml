@@ -124,15 +124,4 @@
         <field name="view_mode">list,form,kanban</field>
         <field name="context">{'search_default_group_by_property_type': True}</field>
     </record>
-
-    <!-- MENU -->
-    <menuitem id="menu_root" name="Estate">
-        <menuitem id="first_level_menu1" name="Advertisements">
-            <menuitem id="property_menu" action="property_action"/>
-        </menuitem>
-        <menuitem id="first_level_menu2" name="Settings">
-            <menuitem id="property_type_menu" action="property_type_action"/>
-            <menuitem id="property_tag_menu" action="property_tag_action"/>
-        </menuitem>
-    </menuitem>
 </odoo>
