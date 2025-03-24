@@ -88,7 +88,7 @@
                             <field name="expected_price"/>
                             <field name="best_price" t-if="record.best_price"/>
                             <field name="selling_price" t-if="record.selling_price"/>
-                            <field name="tag_ids" widget="many2many_tags"/>
+                            <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
                         </div>
                     </t>
                 </templates>
@@ -110,6 +110,7 @@
                 <separator/>
                 <filter string="Available" name="available_properties" domain="[('state', 'in', ('new', 'offer_received'))]"/>
                 <group expand="1" string="Group By">
+                    <filter string="Property Type" name="group_by_property_type" context="{'group_by':'property_type_id'}"/>
                     <filter string="Postcode" name="group_by_postcode" context="{'group_by':'postcode'}"/>
                 </group>
             </search>
