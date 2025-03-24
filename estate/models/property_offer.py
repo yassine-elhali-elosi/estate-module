@@ -64,6 +64,11 @@ class EstatePropertyOffer(models.Model):
 
     def accept_offer(self):
         for record in self:
+            if record.status == 'accepted':
+                continue
+            if record.status == 'refused':
+                raise UserError('Cannot accept a refused offer')
+
             existing_accepted_offer = self.search([
                 ('status', '=', 'accepted'),
                 ('property_id', '=', record.property_id.id),
@@ -71,26 +76,23 @@ class EstatePropertyOffer(models.Model):
 
             if existing_accepted_offer:
                 raise UserError('Another offer has already been accepted')
-            
-            if record.status != 'accepted':
-                record.status = 'accepted'
-                record.property_id.selling_price = record.price
-                record.property_id.buyer = record.partner_id
-                record.property_id.state = 'offer_accepted'
-            else:
-                raise UserError('This offer has already been accepted')
 
-        return True
-    
+            record.status = 'accepted'
+            record.property_id.selling_price = record.price
+            record.property_id.buyer = record.partner_id
+            record.property_id.state = 'offer_accepted'
+
     def refuse_offer(self):
         for record in self:
-            if record.status != 'refused':
-                record.status = 'refused'
-                if record.property_id.state != 'new':
-                    record.property_id.selling_price = 0
-                    record.property_id.buyer = None
-            else:
-                raise UserError('This offer has already been refused')
+            if record.status == 'refused':
+                continue
+            if record.status == 'accepted':
+                raise UserError('Cannot refuse an accepted offer')
+
+            record.status = 'refused'
+            if record.property_id.state != 'new':
+                record.property_id.selling_price = 0
+                record.property_id.buyer = None
             
     @api.model
     def create(self, values):
