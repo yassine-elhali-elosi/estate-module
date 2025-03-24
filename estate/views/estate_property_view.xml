@@ -85,6 +85,10 @@
                     <t t-name="kanban-box">
                         <div>
                             <field name="name"/>
+                            <field name="expected_price"/>
+                            <field name="best_price" t-if="record.best_price"/>
+                            <field name="selling_price" t-if="record.selling_price"/>
+                            <field name="tag_ids" widget="many2many_tags"/>
                         </div>
                     </t>
                 </templates>
