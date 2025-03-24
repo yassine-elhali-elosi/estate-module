@@ -27,7 +27,7 @@ class EstateProperty(models.Model):
     ]
     _order = "id desc"
 
-    name = fields.Char('Propertys name', required=True)
+    name = fields.Char('Title', required=True)
     description = fields.Text('Description')
     postcode = fields.Char('Postcode')
     date_availability = fields.Date('Availability', copy=False, default=fields.Date.today() + timedelta(days=90))
@@ -126,7 +126,6 @@ class EstateProperty(models.Model):
                 if float_compare(record.selling_price, record.expected_price * 0.9, precision_digits=2) < 0:
                     raise ValidationError('The selling price must be at least 90% of the expected price.')
     
-    # Prevent deletion of a property if its state is not “New” or “Cancelled”
     @api.ondelete(at_uninstall=False)
     def _check_property_state(self):
         for record in self:
