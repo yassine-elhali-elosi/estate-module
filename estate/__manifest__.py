@@ -10,7 +10,8 @@
         'views/estate_property_menus.xml',
         'security/ir.model.access.csv',
         'data/estate.property.type.csv',
-        'data/estate_property_demo.xml'
+        'data/estate.property_demo.xml',
+        'data/estate.property.offer_demo.xml'
     ],
     'application': True
 }
