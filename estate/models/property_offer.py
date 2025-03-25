@@ -96,10 +96,11 @@ class EstatePropertyOffer(models.Model):
             
     @api.model
     def create(self, values):
+        print(values)
         if 'property_id' in values and 'price' in values:
             existing_offer = self.search([
                 ('property_id', '=', values['property_id']),
-                ('price', '>=', values['price'])
+                ('price', '>', values['price'])
             ], limit=1)
 
             if existing_offer:
