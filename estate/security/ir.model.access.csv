@@ -3,3 +3,5 @@ access_estate_property_manager,estate.property.manager,model_estate_property,est
 access_estate_property_type_manager,estate.property_type.manager,model_estate_property_type,estate.estate_group_manager,1,1,1,1
 access_estate_property_tag_manager,estate.property_tag.manager,model_estate_property_tag,estate.estate_group_manager,1,1,1,1
 access_estate_property_offer_manager,estate.property_offer.manager,model_estate_property_offer,estate.estate_group_manager,1,1,1,1
+access_estate_property_type_user,estate.property_type.agent,model_estate_property_type,estate.estate_group_user,1,0,0,0
+access_estate_property_tag_user,estate.property_tag.agent,model_estate_property_tag,estate.estate_group_user,1,0,0,0
