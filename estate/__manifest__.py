@@ -11,7 +11,9 @@
         'security/ir.model.access.csv',
         'data/estate.property.type.csv',
         'data/estate.property_demo.xml',
-        'data/estate.property.offer_demo.xml'
+        'data/estate.property.offer_demo.xml',
+        'security/security.xml'
     ],
+    'category': 'Real Estate/Brokerage',
     'application': True
 }
