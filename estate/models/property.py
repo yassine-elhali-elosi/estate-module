@@ -1,7 +1,8 @@
+from datetime import timedelta
+
 from odoo import models, fields, api
 from odoo.exceptions import UserError, ValidationError
 from odoo.tools.float_utils import float_compare, float_is_zero
-from datetime import timedelta
 
 ORIENTATIONS = [
     ('north', 'North'),
@@ -60,8 +61,8 @@ class EstateProperty(models.Model):
     )
     salesperson = fields.Many2one(
         'res.users',
-        string='Salesperson',
-        default=lambda self: self.env.user
+        string='Salesperson'
+        #default=lambda self: self.env.user
     )
 
     tag_ids = fields.Many2many( # relation name
@@ -73,6 +74,13 @@ class EstateProperty(models.Model):
         'estate.property.offer',
         'property_id',
         string='Offers'
+    )
+
+    company_id = fields.Many2one(
+        'res.company',
+        string='Company',
+        default=lambda self: self.env.company,
+        required=True
     )
 
     total_area = fields.Float(compute='_compute_total_area')

@@ -4,7 +4,7 @@ class EstateProperty(models.Model):
     _inherit = 'estate.property'
 
     def sold_property(self):
-        self.check_access('write')
+        #self.check_access('write')
         print(" reached ".center(100, '='))
         self.env['account.move'].sudo().create(
             {
@@ -19,4 +19,4 @@ class EstateProperty(models.Model):
                 ]
             }
         )
-        return super(EstateProperty, self).sold_property()
+        return super().sold_property()

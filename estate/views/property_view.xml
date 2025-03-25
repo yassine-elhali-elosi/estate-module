@@ -80,7 +80,7 @@
         <field name="name">estate.property.kanban</field>
         <field name="model">estate.property</field> 
         <field name="arch" type="xml">
-            <kanban>
+            <kanban default_group_by="property_type_id">
                 <templates>
                     <t t-name="kanban-box">
                         <div>
@@ -108,9 +108,9 @@
                 <field name="living_area" filter_domain="[('living_area', '&lt;=', self)]"/>
                 <field name="facades"/>
                 <separator/>
-                <filter string="Property Type" name="group_by_property_type" context="{'group_by':'property_type_id'}"/>
                 <group expand="1" string="Group By">
                     <filter string="Available" name="available_properties" domain="[('state', 'in', ('new', 'offer_received'))]"/>
+                    <filter string="Property Type" name="group_by_property_type" context="{'group_by':'property_type_id'}"/>
                     <filter string="Postcode" name="group_by_postcode" context="{'group_by':'postcode'}"/>
                 </group>
             </search>
