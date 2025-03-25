@@ -11,26 +11,25 @@
     </record>
 
     <record id="estate_property_rule_user" model="ir.rule">
-        <field name="name">An agent can only see or modify a property with no sales person or which he is the salesperson</field>
+        <field name="name">Agent: See/Modify only their own or unassigned properties</field>
         <field name="model_id" ref="model_estate_property"/>
         <field name="perm_read" eval="True"/>
         <field name="perm_write" eval="True"/>
         <field name="perm_create" eval="False"/>
         <field name="perm_unlink" eval="False"/>
-        <field name="groups" eval="[(6, 0, [ref('estate.estate_group_user')])]"/>
-        <field name="domain_force">[
-            '|', ('salesperson', '=', user.id),
-                ('salesperson', '=', False)
-        ]</field>
+        <field name="groups" eval="[(6, 0, [ref('estate_group_user')])]"/>
+        <field name="domain_force">
+            ['|', ('salesperson', '=', user.id), ('company_id', '=', user.company_id.id)]
+        </field>
     </record>
 
     <record id="estate_property_rule_manager" model="ir.rule">
-        <field name="name">A manager has full access to properties</field>
+        <field name="name">Manager: Full access to properties</field>
         <field name="model_id" ref="model_estate_property"/>
         <field name="perm_read" eval="True"/>
         <field name="perm_write" eval="True"/>
         <field name="perm_create" eval="True"/>
         <field name="perm_unlink" eval="True"/>
-        <field name="groups" eval="[(6, 0, [ref('estate.estate_group_manager')])]"/>
+        <field name="groups" eval="[(6, 0, [ref('estate_group_manager')])]"/>
     </record>
 </odoo>
