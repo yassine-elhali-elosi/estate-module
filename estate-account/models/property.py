@@ -4,6 +4,8 @@ class EstateProperty(models.Model):
     _inherit = 'estate.property'
 
     def sold_property(self):
+        self.check_access('write')
+        print(" reached ".center(100, '='))
         self.env['account.move'].sudo().create(
             {
                 'partner_id': self.buyer.id,
