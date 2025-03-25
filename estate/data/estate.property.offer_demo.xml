@@ -1,4 +1,4 @@
-<odoo>
+<odoo noupdate="1">
     <record id="offer1" model="estate.property.offer">
         <field name="price">10000</field>
         <field name="validity">14</field>
