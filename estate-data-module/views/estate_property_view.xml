@@ -29,10 +29,15 @@
                 <sheet>
                     <group>
                         <field name="x_name"/>
+                        <field name="x_description"/>
+                        <field name="x_postcode"/>
+                        <field name="x_date_availability"/>
                         <field name="x_selling_price"/>
                         <field name="x_expected_price"/>
                         <field name="x_bedrooms"/>
                         <field name="x_living_area"/>
+                        <field name="x_buyer_id"/>
+                        <field name="x_salesperson_id"/>
                     </group>
                 </sheet>
             </form>
