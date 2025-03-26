@@ -1,4 +1,4 @@
-from odoo.tests.common import TransactionCase
+from odoo.tests.common import TransactionCase, Form
 from odoo.exceptions import UserError
 from odoo.tests import tagged
 
@@ -29,3 +29,20 @@ class EstatePropertyOfferTestCase(TransactionCase):
     def test_mark_property_as_sold_with_accepted_offer(self):
         self.properties[2].sold_property()
         self.assertEqual(self.properties[2].state, 'sold')
+
+    def test_onchange_garden_reset(self):
+        property_form = Form(self.env['estate.property'])
+
+        property_form.garden = True
+        self.assertEqual(property_form.garden_area, 10)
+        self.assertEqual(property_form.garden_orientation, 'north')
+
+        property_form.garden_area = 50
+        property_form.garden_orientation = 'south'
+
+        self.assertEqual(property_form.garden_area, 50)
+        self.assertEqual(property_form.garden_orientation, 'south')
+
+        property_form.garden = False
+        self.assertEqual(property_form.garden_area, 0)
+        self.assertFalse(property_form.garden_orientation)
