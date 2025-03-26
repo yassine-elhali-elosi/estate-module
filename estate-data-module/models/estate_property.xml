@@ -129,4 +129,10 @@
         <field name="value">west</field>
         <field name="sequence">4</field>
     </record>
+
+    <!-- Default values -->
+    <record id="default_real_estate_property_expected_price" model="ir.default">
+        <field name="field_id" ref="estate.field_real_estate_property_expected_price"/>
+        <field name="json_value">100000</field>
+    </record>
 </odoo>
