@@ -131,13 +131,17 @@
     </record>
 
     <!-- X2Many fields -->
-    <record id="field_real_estate_property_property_type_id" model="ir.model.fields">
+    <!--
+    <record id="field_real_estate_property_property_type_id1" model="ir.model.fields">
         <field name="model_id" ref="model_real_estate_property" />
         <field name="name">x_property_type_id</field>
         <field name="field_description">Property Type</field>
         <field name="ttype">many2one</field>
         <field name="relation">x_estate.property.type</field>
+        <field name="required">True</field>
+        <field name="ondelete">restrict</field>
     </record>
+    -->
 
     <record id="field_real_estate_property_buyer" model="ir.model.fields">
         <field name="model_id" ref="model_real_estate_property" />
