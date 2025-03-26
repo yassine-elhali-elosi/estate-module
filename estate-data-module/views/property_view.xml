@@ -41,7 +41,7 @@
 
     <!-- menus -->
     <menuitem id="menu_root" name="Estate Data Module">
-        <menuitem id="first_level_menu1" name="Advertisements">
+        <menuitem id="first_level_menu1" name="Menu">
             <menuitem id="property_menu" action="property_action"/>
         </menuitem>
     </menuitem> 
