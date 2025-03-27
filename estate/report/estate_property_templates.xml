@@ -1,0 +1,58 @@
+<odoo>
+    <template id="report_estate_property_offers">
+        <t t-foreach="docs" t-as="property">
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div class="row mb16">
+                            <div class="col-6">
+                                <img t-if="property.company_id.logo" 
+                                    t-att-src="property.company_id.logo" 
+                                    style="max-width: 150px; max-height: 50px;" 
+                                    alt="Company Logo"/>
+                            </div>
+                            <div class="col-6 text-right">
+                                <p><strong t-field="property.company_id.name"/></p>
+                                <p t-field="property.company_id.street"/>
+                                <p>
+                                    <span t-field="property.company_id.zip"/> <span t-field="property.company_id.city"/>
+                                </p>
+                                <p t-field="property.company_id.country_id.name"/>
+                            </div>
+                        </div>
+                        <h2><span t-field="property.name"/></h2>
+                        <div>
+                            <p><strong>Salesman: </strong><span t-field="property.salesperson"/></p>
+                            <p><strong>Expected Price: </strong><span t-field="property.expected_price"/></p>
+                            <p><strong>Status: </strong><span t-field="property.state"/></p>
+                        </div>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Price</th>
+                                    <th>Partner</th>
+                                    <th>Validity (days)</th>
+                                    <th>Deadline</th>
+                                    <th>State</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-set="offers" t-value="property.mapped('offer_ids')"/>
+                                <tr t-foreach="offers" t-as="offer">
+                                    <td><span t-field="offer.price"/></td>
+                                    <td><span t-field="offer.partner_id"/></td>
+                                    <td><span t-field="offer.validity"/></td>
+                                    <td><span t-field="offer.date_deadline"/></td>
+                                    <td>
+                                        <span t-field="offer.status" 
+                                            t-att-class="'text-success' if offer.status == 'accepted' else 'text-danger' if offer.status == 'refused' else ''"/>
+                                    </td>                                
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>
