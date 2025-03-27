@@ -1,0 +1,9 @@
+<record id="business_trip_form" model="ir.ui.view">
+    <field name="name">business.trip.form</field>
+    <field name="model">business.trip</field>
+    <field name="arch" type="xml">
+        <form string="Business Trip">
+            <chatter open_attachments="True"/>
+        </form>
+    </field>
+</record>
