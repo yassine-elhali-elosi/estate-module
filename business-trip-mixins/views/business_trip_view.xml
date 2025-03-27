@@ -6,6 +6,7 @@
         <field name="arch" type="xml">
             <form string="Business Trip">
                 <field name="name"/>
+                <field name="state"/>
                 <chatter open_attachments="True"/>
             </form>
         </field>
@@ -16,5 +17,13 @@
         <field name="name">Business Trips</field>
         <field name="res_model">business.trip</field>
         <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- SUBTYPES -->
+    <record id="mt_state_change" model="mail.message.subtype">
+        <field name="name">Trip confirmed</field>
+        <field name="res_model">business.trip</field>
+        <field name="default" eval="True"/>
+        <field name="description">Business Trip confirmed!</field>
     </record>
 </odoo>
