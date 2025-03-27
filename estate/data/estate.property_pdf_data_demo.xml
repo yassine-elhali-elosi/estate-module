@@ -1,4 +1,4 @@
-<odoo>
+<odoo noupdate="1">
     <!-- Data for "Build PDF Reports" tutorial -->
     <record id="villa" model="estate.property">
         <field name="name">(PDF) Big Villa</field>
