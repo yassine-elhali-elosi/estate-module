@@ -12,13 +12,20 @@
                         <table class="table">
                             <thead>
                                 <tr>
+                                    <th>Creation Date</th>
                                     <th>Price</th>
+                                    <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <t t-set="offers" t-value="property.mapped('offer_ids')"/>
                                 <tr t-foreach="offers" t-as="offer">
+                                    <td><span t-field="offer.create_date"/></td>
                                     <td><span t-field="offer.price"/></td>
+                                    <td>
+                                        <span t-field="offer.status" 
+                                            t-att-class="'text-success' if offer.status == 'accepted' else 'text-danger' if offer.status == 'refused' else ''"/>
+                                    </td>                                
                                 </tr>
                             </tbody>
                         </table>
