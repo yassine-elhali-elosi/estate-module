@@ -1,0 +1,17 @@
+<odoo>
+    <template id="report_property_extended" inherit_id="estate.report_estate_property">
+        <xpath expr="//div[@class='page']" position="inside">
+            <t t-if="property.state == 'sold'">
+                <h3>Invoice Information</h3>
+                <t t-set="invoice" t-value="env['account.move'].search([('partner_id', '=', property.buyer.id), ('move_type', '=', 'out_invoice')], limit=1)"/>
+                <t t-if="invoice">
+                    <p><strong>Invoice has already been created.</strong></p>
+                </t>
+                <t t-else="">
+                    <p><strong>Invoice ID:</strong> <t t-esc="invoice.name"/></p>
+                    <p><strong>Total:</strong> <t t-esc="invoice.amount_total"/></p>
+                </t>
+            </t>
+        </xpath>
+    </template>
+</odoo>
