@@ -15,6 +15,9 @@ class BusinessTrip(models.Model):
     guest_ids = fields.Many2many("res.partner", "Participants")
     state = fields.Selection(STATES, tracking=True)
 
+    expense_ids = fields.One2many('business.expense', 'trip_id', 'Expenses')
+    alias_id = fields.Many2one('mail.alias', string='Alias', ondelete="restrict", required=True)
+
     def _track_subtype(self, initial_values):
         self.ensure_one()
         if 'state' in initial_values and self.state == 'confirmed':
@@ -44,3 +47,13 @@ class BusinessTrip(models.Model):
         )
 
         return [new_group] + groups
+    
+    def _get_alias_model_name(self, vals):
+        return "business.expense"
+    
+    def _get_alias_values(self):
+        values = super()._get_alias_values()
+        values["alias_defaults"] = {"trip_id": self.id}
+        values["alias_contact"] = "followers"
+        
+        return values
