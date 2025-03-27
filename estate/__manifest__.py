@@ -8,11 +8,12 @@
         'views/property_view.xml',
         'views/res_users_view.xml',
         'views/estate_property_menus.xml',
-        'security/ir.model.access.csv',
         'data/estate.property.type.csv',
         'data/estate.property_pdf_data_demo.xml',
+        'report/estate_property_offers_templates.xml',
         'report/estate_property_templates.xml',
         'report/estate_property_reports.xml',
+        'security/ir.model.access.csv',
         'security/security.xml'
     ],
     'category': 'Real Estate/Brokerage',
