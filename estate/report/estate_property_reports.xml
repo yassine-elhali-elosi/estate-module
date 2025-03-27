@@ -1,11 +1,11 @@
 <odoo>
     <!-- Estate Property Report -->
-    <record id="report_estate_property_offers_actions_report" model="ir.actions.report">
+    <record id="report_estate_property_actions_report" model="ir.actions.report">
         <field name="name">Estate Property Offers</field>
         <field name="model">estate.property</field>
         <field name="report_type">qweb-pdf</field>
-        <field name="report_name">estate.report_estate_property_offers</field>
-        <field name="report_file">estate.report_estate_property_offers</field>
+        <field name="report_name">estate.report_estate_property</field>
+        <field name="report_file">estate.report_estate_property</field>
         <field name="print_report_name">'Estate Property Offers'</field>
         <!--<field name="paperformat_id" ref="event.paperformat_euro_lowmargin"/>-->
         <field name="binding_model_id" ref="estate.model_estate_property"/>
