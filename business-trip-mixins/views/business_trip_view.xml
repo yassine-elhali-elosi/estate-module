@@ -5,6 +5,7 @@
         <field name="model">business.trip</field>
         <field name="arch" type="xml">
             <form string="Business Trip">
+                <field name="name"/>
                 <chatter open_attachments="True"/>
             </form>
         </field>
