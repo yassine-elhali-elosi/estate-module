@@ -45,3 +45,7 @@ print("res.partner> created record: ", created_record)
 
 updated_record = models.execute_kw(db, uid, password, "res.partner", "write", [[created_record], {"name": "Newer Partner"}])
 print("res.partner> update created record: ", updated_record)
+
+
+deleted_record = models.execute_kw(db, uid, password, "res.partner", "unlink", [[created_record]])
+print("res.partner> delete created record: ", deleted_record)
