@@ -5,6 +5,12 @@ STATES = [
     ('confirmed', 'Confirmed')
 ]
 
+ALIAS_CONTACTS = [
+    ('everyone', 'Everyone'),
+    ('partners', 'Partners only'),
+    ('followers', 'Followers only')
+]
+
 class BusinessTrip(models.Model):
     _name = "business.trip"
     _inherit = ["mail.thread"]
@@ -17,6 +23,13 @@ class BusinessTrip(models.Model):
 
     expense_ids = fields.One2many('business.expense', 'trip_id', 'Expenses')
     alias_id = fields.Many2one('mail.alias', string='Alias', ondelete="restrict", required=True)
+    alias_name = fields.Char()
+    alias_domain = fields.Char(compute="_compute_alias_domain")
+    alias_contact = fields.Selection(ALIAS_CONTACTS, default="everyone")
+
+    def _compute_alias_domain(self):
+        for record in self:
+            record.alias_domain = self.env['ir.config_parameter'].sudo().get_param('mail.catchall.domain', '')
 
     def _track_subtype(self, initial_values):
         self.ensure_one()
