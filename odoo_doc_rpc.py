@@ -40,3 +40,8 @@ print("\nres.partner> is_company=True, records(name, country_id, comment): ", re
 
 created_record = models.execute_kw(db, uid, password, "res.partner", "create", [{"name": "New Partner"}])
 print("res.partner> created record: ", created_record)
+
+
+
+updated_record = models.execute_kw(db, uid, password, "res.partner", "write", [[created_record], {"name": "Newer Partner"}])
+print("res.partner> update created record: ", updated_record)
