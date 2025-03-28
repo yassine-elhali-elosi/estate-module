@@ -31,6 +31,9 @@
                             </page>
                             <page string="Expenses">
                                 <field name="expense_ids" widget="many2many_tags" string="Expenses"/>
+                                <field name="expense_ids">
+                                    <list ref="business_expense_view_list"/>
+                                </field>
                             </page>
                         </notebook>
                     </div>

@@ -2,6 +2,7 @@
     <menuitem id="menu_root" name="Business Trip">
         <menuitem id="first_level_menu1" name="Menu">
             <menuitem id="business_trip_menu" action="business_trip_action"/>
+            <menuitem id="business_expense_menu" action="business_expense_action"/>
         </menuitem>
     </menuitem>
 </odoo>

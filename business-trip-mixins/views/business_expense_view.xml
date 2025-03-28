@@ -1,0 +1,22 @@
+<odoo>
+    <!-- List View -->
+    <record id="business_expense_view_list" model="ir.ui.view">
+        <field name="name">business.expense.list</field>
+        <field name="model">business.expense</field>
+        <field name="arch" type="xml">
+            <list string="Business Expenses">
+                <field name="name"/>
+                <field name="amount"/>
+                <field name="trip_id"/>
+                <field name="partner_id"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="business_expense_action" model="ir.actions.act_window">
+        <field name="name">Business Expenses</field>
+        <field name="res_model">business.expense</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>
