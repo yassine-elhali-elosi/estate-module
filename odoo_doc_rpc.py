@@ -33,3 +33,6 @@ print("\nres.partner> is_company=True, records(name, country_id, comment): ", re
 
 results_fields_get = models.execute_kw(db, uid, password, "res.partner", "fields_get", [], {"attributes": ["string", "help", "type"]})
 print("\nres.partner> fields: ", results_fields_get)
+
+results_search_read = models.execute_kw(db, uid, password, "res.partner", "search_read", [[["is_company", "=", True]]], {"fields": ["name", "country_id", "comment"], "limit": 5})
+print("\nres.partner> is_company=True, records(name, country_id, comment): ", results_search_read)
