@@ -54,14 +54,36 @@ print("\nres.partner> delete created record: ", deleted_record)
 
 # Create models
 try:
-    created_model = models.execute_kw(db, uid, password, "ir.model", "create", [{
+    created_model1 = models.execute_kw(db, uid, password, "ir.model", "create", [{
         "name": "Custom Model",
         "model": "x_custom_model",
         "state": "manual"
     }])
-    print("\nir.model> create: ", created_model)
+    print("\nir.model> create: ", created_model1)
 except Exception:
-    print("\nmodel x_custom_model already exists.")
+    print("\nx_custom_model model already exists.")
 
-created_model_fields = models.execute_kw(db, uid, password, 'x_custom_model', 'fields_get', [], {'attributes': ['string', 'help', 'type']})
-print("\nx_custom_model> fields: ", created_model_fields)
+created_model1_fields = models.execute_kw(db, uid, password, 'x_custom_model', 'fields_get', [], {'attributes': ['string', 'help', 'type']})
+print("\nx_custom_model> fields: ", created_model1_fields)
+
+
+try:
+    created_model2 = models.execute_kw(db, uid, password, "ir.model", "create", [{
+        "name": "Custom Model",
+        "model": "x_custom",
+        "state": "manual"
+    }])
+    print("\nir.model> create: ", created_model1)
+
+    created_model2_fields = models.execute_kw(db, uid, password, "ir.model.fields", "create", [{
+        "model_id": created_model2,
+        "name": "x_name",
+        "ttype": "char",
+        "state": "manual",
+        "required": True
+    }])
+    print("\nir.model.fields> create: ", created_model2_fields)
+    record_id = models.execute_kw(db, uid, password, 'x_custom', 'create', [{'x_name': "test record"}])
+    models.execute_kw(db, uid, password, 'x_custom', 'read', [[record_id]])
+except Exception:
+    print("\nx_custom model already exists.")
