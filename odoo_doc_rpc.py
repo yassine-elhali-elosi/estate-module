@@ -39,13 +39,29 @@ print("\nres.partner> is_company=True, records(name, country_id, comment): ", re
 
 
 created_record = models.execute_kw(db, uid, password, "res.partner", "create", [{"name": "New Partner"}])
-print("res.partner> created record: ", created_record)
+print("\nres.partner> created record: ", created_record)
 
 
 
 updated_record = models.execute_kw(db, uid, password, "res.partner", "write", [[created_record], {"name": "Newer Partner"}])
-print("res.partner> update created record: ", updated_record)
+print("\nres.partner> update created record: ", updated_record)
 
 
 deleted_record = models.execute_kw(db, uid, password, "res.partner", "unlink", [[created_record]])
-print("res.partner> delete created record: ", deleted_record)
+print("\nres.partner> delete created record: ", deleted_record)
+
+
+
+# Create models
+try:
+    created_model = models.execute_kw(db, uid, password, "ir.model", "create", [{
+        "name": "Custom Model",
+        "model": "x_custom_model",
+        "state": "manual"
+    }])
+    print("\nir.model> create: ", created_model)
+except Exception:
+    print("\nmodel x_custom_model already exists.")
+
+created_model_fields = models.execute_kw(db, uid, password, 'x_custom_model', 'fields_get', [], {'attributes': ['string', 'help', 'type']})
+print("\nx_custom_model> fields: ", created_model_fields)
