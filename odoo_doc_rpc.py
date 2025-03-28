@@ -16,20 +16,20 @@ models = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/object')
 results_name_search = models.execute_kw(db, uid, password, 'res.partner', 'name_search', ['Agent Elosi'], {'limit': 10})
 print("res.partner> name_search(): ", results_name_search)
 
-results_customer_companies = models.execute_kw(db, uid, password, 'res.partner', 'search', [[['is_company', '=', True]]])
-print("\nres.partner> is_company=True: ", results_customer_companies)
+results_search = models.execute_kw(db, uid, password, 'res.partner', 'search', [[['is_company', '=', True]]])
+print("\nres.partner> is_company=True: ", results_search)
 
-results_customer_companies_with_offset = models.execute_kw(db, uid, password, 'res.partner', 'search', [[['is_company', '=', True]]], {"offset": 5, "limit": 5})
-print("\nres.partner> is_company=True, offset=10: ", results_customer_companies_with_offset)
+results_search_offset_limit = models.execute_kw(db, uid, password, 'res.partner', 'search', [[['is_company', '=', True]]], {"offset": 5, "limit": 5})
+print("\nres.partner> is_company=True, offset=10: ", results_search_offset_limit)
 
-results_customer_companies_count = models.execute_kw(db, uid, password, 'res.partner', 'search_count', [[['is_company', '=', True]]])
-print("\nres.partner> is_company=True, count: ", results_customer_companies_count)
+results_search_count = models.execute_kw(db, uid, password, 'res.partner', 'search_count', [[['is_company', '=', True]]])
+print("\nres.partner> is_company=True, count: ", results_search_count)
 
-results_customer_companies_records = models.execute_kw(db, uid, password, 'res.partner', 'read', [results_customer_companies])
-print("\nres.partner> is_company=True, number of records: ", len(results_customer_companies_records))
+results_read = models.execute_kw(db, uid, password, 'res.partner', 'read', [results_search])
+print("\nres.partner> is_company=True, number of records: ", len(results_read))
 
-results_customer_companies_records_specific_fields = models.execute_kw(db, uid, password, 'res.partner', 'read', [results_customer_companies], {"fields": ["name", "country_id", "comment"]})
-print("\nres.partner> is_company=True, records(name, country_id, comment): ", results_customer_companies_records_specific_fields)
+results_read_with_fields = models.execute_kw(db, uid, password, 'res.partner', 'read', [results_search], {"fields": ["name", "country_id", "comment"]})
+print("\nres.partner> is_company=True, records(name, country_id, comment): ", results_read_with_fields)
 
-results_res_partner_fields = models.execute_kw(db, uid, password, "res.partner", "fields_get", [], {"attributes": ["string", "help", "type"]})
-print("\nres.partner> fields: ", results_res_partner_fields)
+results_fields_get = models.execute_kw(db, uid, password, "res.partner", "fields_get", [], {"attributes": ["string", "help", "type"]})
+print("\nres.partner> fields: ", results_fields_get)
