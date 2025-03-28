@@ -29,6 +29,9 @@
                                             string="Accept Emails From"/>
                                 </group>
                             </page>
+                            <page string="Expenses">
+                                <field name="expense_ids" widget="many2many_tags" string="Expenses"/>
+                            </page>
                         </notebook>
                     </div>
                     <div class="oe_chatter">
