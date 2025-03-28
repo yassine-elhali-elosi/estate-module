@@ -37,9 +37,12 @@
                             </page>
                         </notebook>
                     </div>
-                    <div class="oe_chatter">
-                        <chatter open_attachments="True"/>
-                    </div>
+                    <!--<chatter open_attachments="True"/>-->
+                    <chatter>
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </chatter>
                 </div>
             </form>
         </field>

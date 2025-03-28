@@ -13,7 +13,7 @@ ALIAS_CONTACTS = [
 
 class BusinessTrip(models.Model):
     _name = "business.trip"
-    _inherit = ["mail.thread"]
+    _inherit = ["mail.thread", "mail.activity.mixin"]
     _description = "Business Trip"
 
     name = fields.Char(tracking=True)
