@@ -36,3 +36,7 @@ print("\nres.partner> fields: ", results_fields_get)
 
 results_search_read = models.execute_kw(db, uid, password, "res.partner", "search_read", [[["is_company", "=", True]]], {"fields": ["name", "country_id", "comment"], "limit": 5})
 print("\nres.partner> is_company=True, records(name, country_id, comment): ", results_search_read)
+
+
+created_record = models.execute_kw(db, uid, password, "res.partner", "create", [{"name": "New Partner"}])
+print("res.partner> created record: ", created_record)
