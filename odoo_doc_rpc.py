@@ -25,5 +25,8 @@ print("res.partner> is_company=True, offset=10: ", results_customer_companies_wi
 results_customer_companies_count = models.execute_kw(db, uid, password, 'res.partner', 'search_count', [[['is_company', '=', True]]])
 print("res.partner> is_company=True, count: ", results_customer_companies_count)
 
-records = models.execute_kw(db, uid, password, 'res.partner', 'read', [results_customer_companies])
-print(len(records))
+results_customer_companies_records = models.execute_kw(db, uid, password, 'res.partner', 'read', [results_customer_companies])
+print("res.partner> is_company=True, number of records: ", len(results_customer_companies_records))
+
+results_customer_companies_records_specific_fields = models.execute_kw(db, uid, password, 'res.partner', 'read', [results_customer_companies], {"fields": ["name", "country_id", "comment"]})
+print("res.partner> is_company=True, records(name, country_id, comment): ", results_customer_companies_records_specific_fields)
