@@ -21,3 +21,6 @@ print("res.partner> is_company=True: ", results_customer_companies)
 
 results_customer_companies_with_offset = models.execute_kw(db, uid, password, 'res.partner', 'search', [[['is_company', '=', True]]], {"offset": 5, "limit": 5})
 print("res.partner> is_company=True, offset=10: ", results_customer_companies_with_offset)
+
+results_customer_companies_count = models.execute_kw(db, uid, password, 'res.partner', 'search_count', [[['is_company', '=', True]]])
+print("res.partner> is_company=True, count: ", results_customer_companies_count)
