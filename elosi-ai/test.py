@@ -18,4 +18,4 @@ mistral_response = client.agents.complete(
     ]
 )
 
-print(mistral_response)
+print(mistral_response.choices[0].message.content)
