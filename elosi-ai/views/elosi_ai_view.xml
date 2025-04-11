@@ -4,11 +4,18 @@
         <field name="name">elosi.ai.form</field>
         <field name="model">elosi.ai</field>
         <field name="arch" type="xml">
-            <form string="Elosi AI">
+            <form string="AI Assistant">
                 <sheet>
+                    <div class="oe_title">
+                        <h1>Elosi AI</h1>
+                    </div>
                     <group>
-                        <field name="input_prompt"/>
-                        <field name="output_prompt"/>
+                        <field name="input_prompt" placeholder="Type your prompt here..." nolabel="1" widget="text"/>
+                    </group>
+                    <group>
+                        <field name="output_prompt" readonly="1" nolabel="1" widget="text" 
+                               placeholder="AI response will appear here..." 
+                               style="min-height: 200px;"/>
                     </group>
                 </sheet>                
             </form>
@@ -19,7 +26,7 @@
     <record id="elosi_ai_action" model="ir.actions.act_window">
         <field name="name">Elosi AI</field>
         <field name="res_model">elosi.ai</field>
-        <field name="view_mode">list,form</field>
+        <field name="view_mode">form</field>
     </record>
 
     <!-- MENU -->

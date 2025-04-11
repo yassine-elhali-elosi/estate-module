@@ -5,12 +5,12 @@ class ElosiAI(models.Model):
     _description = "Elosi AI for ir.actions.server"
 
     input_prompt = fields.Text("Input Prompt", required=True)
-    output_prompt = fields.Text("Output Prompt", compute="_compute_output_prompt")
+    output_prompt = fields.Text("Output Prompt", compute="_compute_output_prompt", store=True)
 
     @api.depends("input_prompt")
     def _compute_output_prompt(self):
-        print(self.input_prompt)
-
-        if self.input_prompt:
+        for record in self:
+            print("input :", record.input_prompt)
             print("Generating output prompt...")
-            print("Output prompt generated.")
+            record.output_prompt = "print(\"hello\")"
+            print("Output prompt generated:", record.output_prompt)
