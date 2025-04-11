@@ -4,7 +4,7 @@ class ElosiAI(models.Model):
     _name = "elosi.ai"
     _description = "Elosi AI for ir.actions.server"
 
-    input_prompt = fields.Text("Input Prompt", store=False)
+    input_prompt = fields.Text("Input Prompt")
     output_prompt = fields.Text("Output Prompt", compute="_compute_output_prompt", store=True)
 
     @api.depends("input_prompt")
@@ -14,3 +14,11 @@ class ElosiAI(models.Model):
             print("Generating output prompt...")
             record.output_prompt = "print(\"hello\")"
             print("Output prompt generated:", record.output_prompt)
+
+    def generate_code(self):
+        for record in self:
+            print("Generating code for:", record.input_prompt)
+
+            record.output_prompt = "print(\"hello\")\n" + record.input_prompt
+        
+        return True

@@ -7,14 +7,18 @@
             <form string="AI Assistant">
                 <sheet>
                     <div class="oe_title">
-                        <h1>Elosi AI</h1>
+                        <h1>AI Assistant</h1>
                     </div>
                     <group>
-                        <field name="input_prompt" placeholder="Type your prompt here..." nolabel="1" widget="text"/>
+                        <field name="input_prompt" placeholder="example prompt..." nolabel="1" widget="text"/>
+                        <button string="Generate Code" 
+                                type="object" 
+                                name="generate_code" 
+                                class="oe_highlight"/>
                     </group>
                     <group>
                         <field name="output_prompt" readonly="1" nolabel="1" widget="text" 
-                               placeholder="AI response will appear here..." 
+                               placeholder="AI generated code here" 
                                style="min-height: 200px;"/>
                     </group>
                 </sheet>                
