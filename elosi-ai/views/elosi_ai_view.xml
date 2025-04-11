@@ -10,14 +10,16 @@
                         <h1>AI Assistant</h1>
                     </div>
                     <group>
-                        <field name="input_prompt" placeholder="example prompt..." nolabel="1" widget="text"/>
+                        <field name="input_prompt" placeholder="example prompt..." widget="text"/>
                         <button string="Generate Code" 
                                 type="object" 
                                 name="generate_code" 
                                 class="oe_highlight"/>
                     </group>
+                    <hr></hr>
+                    <h2>Generated Code</h2>
                     <group>
-                        <field name="output_prompt" readonly="1" nolabel="1" widget="text" 
+                        <field name="output_prompt" widget="text" 
                                placeholder="AI generated code here" 
                                style="min-height: 200px;"/>
                     </group>
