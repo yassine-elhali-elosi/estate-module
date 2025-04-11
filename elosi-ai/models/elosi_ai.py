@@ -17,7 +17,8 @@ class ElosiAI(models.Model):
     def generate_code(self):
         for record in self:
             print("Generating code for:", record.input_prompt)
-            """client = Mistral(api_key=MISTRAL_API_KEY)
+            """
+            client = Mistral(api_key=MISTRAL_API_KEY)
 
             mistral_response = client.agents.complete(
                 agent_id = "ag:7e1f4155:20250410:untitled-agent:a8450e92",
@@ -28,7 +29,8 @@ class ElosiAI(models.Model):
                     }
                 ]
             )
-            generated_code = mistral_response.choices[0].message.content"""
+            generated_code = mistral_responchoicesse.choices[0].message.content
+            """
 
             generated_code = "print(\"hello\")\n" + record.input_prompt
             record.output_prompt = generated_code
