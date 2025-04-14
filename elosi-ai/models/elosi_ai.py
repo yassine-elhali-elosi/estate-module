@@ -13,6 +13,7 @@ class ElosiAI(models.Model):
 
     input_prompt = fields.Text("Input Prompt")
     output_prompt = fields.Text("Output Prompt", store=True)
+    output_result = fields.Text("Output Result", store=True)
 
     def generate_code(self):
         self.ensure_one() 
@@ -35,6 +36,14 @@ class ElosiAI(models.Model):
 
         #generated_code = "print(\"hello\")\n" + (self.input_prompt)
         self.output_prompt = generated_code
+
+        generated_code = generated_code.replace("env", "self.env")
+        print("Generated code:", generated_code)
+        
+        local_vars = {'self': self}
+        exec(f"result = {generated_code}", globals(), local_vars)
+        self.output_result = local_vars.get('result')
+        print("Result:", self.output_result)
         
         return {
             'type': 'ir.actions.act_window',
