@@ -23,6 +23,13 @@
                                placeholder="AI generated code here" 
                                style="min-height: 200px;"/>
                     </group>
+                    <hr></hr>
+                    <h2>Result preview</h2>
+                    <group>
+                        <field name="output_result" widget="text" 
+                               placeholder="result of Python code" 
+                               style="min-height: 200px;"/>
+                    </group>
                 </sheet>                
             </form>
         </field>

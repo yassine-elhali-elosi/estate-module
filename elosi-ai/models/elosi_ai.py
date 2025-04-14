@@ -44,6 +44,8 @@ class ElosiAI(models.Model):
         exec(f"result = {generated_code}", globals(), local_vars)
         self.output_result = local_vars.get('result')
         print("Result:", self.output_result)
+
+        self.input_prompt = ""
         
         return {
             'type': 'ir.actions.act_window',
