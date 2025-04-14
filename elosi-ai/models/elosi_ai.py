@@ -18,10 +18,11 @@ class ElosiAI(models.Model):
     def generate_code(self):
         self.ensure_one() 
         print("Generating code for:", self.input_prompt)
+        self.output_prompt = "Generating code..."
         client = Mistral(api_key=MISTRAL_API_KEY)
 
         mistral_response = client.agents.complete(
-            agent_id = "ag:7e1f4155:20250410:untitled-agent:a8450e92",
+            agent_id = "ag:7e1f4155:20250414:untitled-agent:bb0a05f5",
             messages=[
                 {
                     "role": "user",
@@ -37,11 +38,10 @@ class ElosiAI(models.Model):
         #generated_code = "print(\"hello\")\n" + (self.input_prompt)
         self.output_prompt = generated_code
 
-        generated_code = generated_code.replace("env", "self.env")
         print("Generated code:", generated_code)
         
         local_vars = {'self': self}
-        exec(f"result = {generated_code}", globals(), local_vars)
+        exec(f"result = {generated_code}", local_vars)
         self.output_result = local_vars.get('result')
         print("Result:", self.output_result)
 
