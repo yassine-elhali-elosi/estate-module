@@ -15,24 +15,32 @@ class ElosiAI(models.Model):
     output_prompt = fields.Text("Output Prompt", store=True)
 
     def generate_code(self):
-        for record in self:
-            print("Generating code for:", record.input_prompt)
-            """
-            client = Mistral(api_key=MISTRAL_API_KEY)
+        self.ensure_one() 
+        print("Generating code for:", self.input_prompt)
+        client = Mistral(api_key=MISTRAL_API_KEY)
 
-            mistral_response = client.agents.complete(
-                agent_id = "ag:7e1f4155:20250410:untitled-agent:a8450e92",
-                messages=[
-                    {
-                        "role": "user",
-                        "content": record.input_prompt
-                    }
-                ]
-            )
-            generated_code = mistral_responchoicesse.choices[0].message.content
-            """
+        mistral_response = client.agents.complete(
+            agent_id = "ag:7e1f4155:20250410:untitled-agent:a8450e92",
+            messages=[
+                {
+                    "role": "user",
+                    "content": self.input_prompt
+                }
+            ]
+        )
 
-            generated_code = "print(\"hello\")\n" + record.input_prompt
-            record.output_prompt = generated_code
+        print("Response from Mistral:", mistral_response)
+
+        generated_code = mistral_response.choices[0].message.content
+
+        #generated_code = "print(\"hello\")\n" + (self.input_prompt)
+        self.output_prompt = generated_code
         
-        return True
+        return {
+            'type': 'ir.actions.act_window',
+            'res_model': self._name,
+            'res_id': self.id,
+            'view_mode': 'form',
+            'target': 'new',
+            'views': [[False, 'form']],
+        }
