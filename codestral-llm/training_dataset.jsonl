@@ -1,0 +1,1 @@
+{"prompt": "Give me the name of the partner with ID 1", "completion": "\ndef get_partner_name(env, id):\n    return env['res.partner'].browse(id).name"}

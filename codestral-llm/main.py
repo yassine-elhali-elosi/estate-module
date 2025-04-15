@@ -2,9 +2,13 @@ from langchain_ollama.llms import OllamaLLM
 from langchain_core.prompts import ChatPromptTemplate
 import json
 
-def save_dataset(data):
-    with open("llm_dataset.jsonl", "a", encoding="utf-8") as f:
+def save_local_dataset(data):
+    with open("raw_dataset.jsonl", "a", encoding="utf-8") as f:
         f.write(json.dumps(data) + "\n")
+
+def save_training_dataset(data_ollama_format):
+    with open("training_dataset.jsonl", "a", encoding="utf-8") as f:
+        f.write(json.dumps(data_ollama_format) + "\n")
 
 model = OllamaLLM(model="codellama:7b")
 
@@ -36,22 +40,33 @@ print(result)
 feedback = input("Satisfied? (yes/no/fix): ")
 
 if feedback == "yes":
-    save_dataset({
+    save_local_dataset({
         "prompt": input_prompt,
         "result": result,
         "feedback": "accepted"
     })
+    save_training_dataset({
+        "prompt": input_prompt,
+        "completion": result
+    })
+
 elif feedback == "no":
-    save_dataset({
+    save_local_dataset({
         "prompt": input_prompt,
         "result": result,
         "feedback": "refused"
     })
+    # on save pas dans le training
+
 elif feedback == "fix":
     correction = input("Type the corrected code: ")
-    save_dataset({
+    save_local_dataset({
         "prompt": input_prompt,
         "result": result,
         "feedback": "corrected",
         "correction": correction
+    })
+    save_training_dataset({
+        "prompt": input_prompt,
+        "completion": correction
     })
