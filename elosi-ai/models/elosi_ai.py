@@ -6,8 +6,6 @@ from dotenv import load_dotenv
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from llm import main as llm
 
-print(llm.TEMPLATE)
-
 load_dotenv()
 
 class ElosiAI(models.Model):

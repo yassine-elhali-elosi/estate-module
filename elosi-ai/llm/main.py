@@ -12,6 +12,7 @@ You understand models like res.partner, sale.order, crm, and typical business fl
 Always assume the env variable is available.
 Use clear logic and avoid hardcoded IDs.
 Import libraries where necessary.
+**Do not include** quotes before and after the code, it should be pure code and ready to execute.
 
 Here is the prompt:
 {input_prompt}
@@ -34,7 +35,7 @@ def generate_code(input_prompt):
             "input_prompt": input_prompt,
         }
     )
-    
+    print(result)
     return result
 
     """
