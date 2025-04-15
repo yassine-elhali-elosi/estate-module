@@ -37,3 +37,7 @@ class ElosiAI(models.Model):
             'target': 'new',
             'views': [[False, 'form']],
         }
+    
+    def send_feedback(self):
+        feedback_value = self.env.context.get('feedback_value')
+        print(feedback_value)        

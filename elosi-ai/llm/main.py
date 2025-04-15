@@ -38,7 +38,7 @@ def generate_code(input_prompt):
     print(result)
     return result
 
-    """
+def feedback(value, input_prompt, result):
     # ask for feedback to train
     feedback = input("Satisfied? (yes/no/fix): ")
 
@@ -73,4 +73,3 @@ def generate_code(input_prompt):
             "prompt": input_prompt,
             "completion": correction
         })
-    """
