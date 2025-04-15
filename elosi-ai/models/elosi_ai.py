@@ -30,7 +30,6 @@ class ElosiAI(models.Model):
         print("Response from LLM:", llm_response)
 
         self.output_prompt = llm_response
-        self.input_prompt = ""
         self.state = 'generated'
         
         return {
@@ -42,10 +41,15 @@ class ElosiAI(models.Model):
             'views': [[False, 'form']],
         }
         
+    def reset_self(self):
+        self.input_prompt = ""
+        self.output_prompt = ""
+        self.output_result = ""
+        self.state = ""
     
     def send_feedback(self):
         feedback_value = self.env.context.get('feedback_value')
         print(feedback_value)
         # only for "yes" and "no" feedback for now, je dois traiter le cas où c'est "fix"
         llm.feedback(feedback_value, self.input_prompt, self.output_prompt)
-        self.state = ''
+        self.reset_self()
