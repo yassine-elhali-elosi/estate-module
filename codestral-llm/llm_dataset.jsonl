@@ -1,1 +1,1 @@
-{"feedback": "accepted"}
+{"prompt": "Give me the name of the partner with ID 1", "result": "@api.multi\ndef get_partner_name(self):\nreturn self.env['res.partner'].search([('id', '=', 1)]).name", "feedback": "accepted"}

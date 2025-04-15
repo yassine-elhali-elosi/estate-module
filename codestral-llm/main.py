@@ -36,4 +36,22 @@ print(result)
 feedback = input("Satisfied? (yes/no/fix): ")
 
 if feedback == "yes":
-    save_dataset({"feedback": "accepted"})
+    save_dataset({
+        "prompt": input_prompt,
+        "result": result,
+        "feedback": "accepted"
+    })
+elif feedback == "no":
+    save_dataset({
+        "prompt": input_prompt,
+        "result": result,
+        "feedback": "refused"
+    })
+elif feedback == "fix":
+    correction = input("Type the corrected code: ")
+    save_dataset({
+        "prompt": input_prompt,
+        "result": result,
+        "feedback": "corrected",
+        "correction": correction
+    })
