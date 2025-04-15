@@ -19,7 +19,7 @@ Here is the prompt:
 prompt = ChatPromptTemplate(template)
 chain = prompt | model
 
-chain.invoke(
+result = chain.invoke(
     {
         "input_prompt": "Create a method that returns the name of the partner with ID 1",
     }
