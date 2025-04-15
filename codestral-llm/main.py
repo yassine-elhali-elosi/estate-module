@@ -1,5 +1,10 @@
 from langchain_ollama.llms import OllamaLLM
 from langchain_core.prompts import ChatPromptTemplate
+import json
+
+def save_dataset(data):
+    with open("llm_dataset.jsonl", "a", encoding="utf-8") as f:
+        f.write(json.dumps(data) + "\n")
 
 model = OllamaLLM(model="codellama:7b")
 
@@ -29,3 +34,6 @@ print(result)
 
 # ask for feedback to train
 feedback = input("Satisfied? (yes/no/fix): ")
+
+if feedback == "yes":
+    save_dataset({"feedback": "accepted"})
