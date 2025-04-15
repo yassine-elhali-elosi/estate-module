@@ -6,6 +6,7 @@
         <field name="arch" type="xml">
             <form string="AI Assistant">
                 <sheet>
+                    <field name="state" invisible="1"/>
                     <div class="oe_title">
                         <h1>AI Assistant</h1>
                     </div>
@@ -23,16 +24,20 @@
                                placeholder="AI generated code here" 
                                style="min-height: 200px;"/>
                         <h3>Satisfied?</h3><br/>
-                        <button string="Yes" 
-                                type="object" 
-                                name="send_feedback" 
-                                class="oe_highlight"
-                                context="{'feedback_value': 'yes'}"/>
-                        <button string="No" 
-                                type="object" 
-                                name="send_feedback" 
-                                class="oe_highlight"
-                                context="{'feedback_value': 'no'}"/>
+                        <div>
+                            <button string="Yes" 
+                                    type="object" 
+                                    name="send_feedback" 
+                                    class="oe_highlight"
+                                    context="{'feedback_value': 'yes'}"
+                                    invisible="state != 'generated'"/>
+                            <button string="No" 
+                                    type="object" 
+                                    name="send_feedback" 
+                                    class="oe_highlight"
+                                    context="{'feedback_value': 'no'}"
+                                    invisible="state != 'generated'"/>
+                        </div>
                     </group>
                     <hr></hr>
                     <h2>Result preview</h2>
