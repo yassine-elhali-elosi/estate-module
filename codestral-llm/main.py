@@ -26,3 +26,6 @@ result = chain.invoke(
     }
 )
 print(result)
+
+# ask for feedback to train
+feedback = input("Satisfied? (yes/no/fix): ")
