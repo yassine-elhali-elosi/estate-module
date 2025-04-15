@@ -19,12 +19,10 @@ Here is the prompt:
 prompt = ChatPromptTemplate.from_template(template)
 chain = prompt | model
 
-try:
-    result = chain.invoke(
-        {
-            "input_prompt": "Return the name of the partner with ID 1",
-        }
-    )
-    print(result)
-except Exception as e:
-    print(f"An error occurred: {e}")
+input_prompt = input("Prompt: ")
+result = chain.invoke(
+    {
+        "input_prompt": input_prompt,
+    }
+)
+print(result)
