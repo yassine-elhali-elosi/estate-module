@@ -1,7 +1,12 @@
 from odoo import models, fields, api
 import os
+import sys
 from mistralai import Mistral
 from dotenv import load_dotenv
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from llm import main as llm
+
+print(llm.TEMPLATE)
 
 load_dotenv()
 
