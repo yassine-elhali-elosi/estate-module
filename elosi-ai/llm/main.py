@@ -1,6 +1,7 @@
 from langchain_ollama.llms import OllamaLLM
 from langchain_core.prompts import ChatPromptTemplate
 import json
+import os
 
 MODEL = OllamaLLM(model="codellama:7b")
 
@@ -19,12 +20,18 @@ Here is the prompt:
 """
 
 def save_local_dataset(data):
-    with open("raw_dataset.jsonl", "a", encoding="utf-8") as f:
+    print("Saving local dataset...", data)
+    file_path = os.path.join(os.path.dirname(__file__), "raw_dataset.jsonl")
+    with open(file_path, "a", encoding="utf-8") as f:
         f.write(json.dumps(data) + "\n")
+        f.flush()
 
 def save_training_dataset(data_ollama_format):
-    with open("training_dataset.jsonl", "a", encoding="utf-8") as f:
+    print("Saving training dataset...", data_ollama_format)
+    file_path = os.path.join(os.path.dirname(__file__), "training_dataset.jsonl")
+    with open(file_path, "a", encoding="utf-8") as f:
         f.write(json.dumps(data_ollama_format) + "\n")
+        f.flush()
 
 def generate_code(input_prompt):
     prompt = ChatPromptTemplate.from_template(TEMPLATE)
@@ -40,9 +47,10 @@ def generate_code(input_prompt):
 
 def feedback(value, input_prompt, result):
     # ask for feedback to train
-    feedback = input("Satisfied? (yes/no/fix): ")
+    print(value, input_prompt, result)
 
-    if feedback == "yes":
+    if value == "yes":
+        print("--------------")
         save_local_dataset({
             "prompt": input_prompt,
             "result": result,
@@ -53,7 +61,7 @@ def feedback(value, input_prompt, result):
             "completion": result
         })
 
-    elif feedback == "no":
+    elif value == "no":
         save_local_dataset({
             "prompt": input_prompt,
             "result": result,
@@ -61,7 +69,7 @@ def feedback(value, input_prompt, result):
         })
         # on save pas dans le training
 
-    elif feedback == "fix":
+    elif value == "fix":
         correction = input("Type the corrected code: ")
         save_local_dataset({
             "prompt": input_prompt,
@@ -73,3 +81,5 @@ def feedback(value, input_prompt, result):
             "prompt": input_prompt,
             "completion": correction
         })
+
+    print("Feedback saved.")

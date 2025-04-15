@@ -1,1 +1,2 @@
 {"prompt": "Give me the name of the partner with ID 1", "completion": "\ndef get_partner_name(env, id):\n    return env['res.partner'].browse(id).name"}
+{"prompt": "", "completion": "from openerp import models, fields, api, _\n\nclass ResPartner(models.Model):\n    _name = 'res.partner'\n\n    name = fields.Char('Name', required=True)\n    phone = fields.Char('Phone')\n    mobile = fields.Char('Mobile')\n    email = fields.Char('Email')\n\n    @api.multi\n    def get_name(self):\n        return self.name"}
