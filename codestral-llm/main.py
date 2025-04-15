@@ -2,17 +2,9 @@ from langchain_ollama.llms import OllamaLLM
 from langchain_core.prompts import ChatPromptTemplate
 import json
 
-def save_local_dataset(data):
-    with open("raw_dataset.jsonl", "a", encoding="utf-8") as f:
-        f.write(json.dumps(data) + "\n")
+MODEL = OllamaLLM(model="codellama:7b")
 
-def save_training_dataset(data_ollama_format):
-    with open("training_dataset.jsonl", "a", encoding="utf-8") as f:
-        f.write(json.dumps(data_ollama_format) + "\n")
-
-model = OllamaLLM(model="codellama:7b")
-
-template = """
+TEMPLATE = """
 You are an expert Odoo backend developer.
 Only return the Python code — no explanations, no comments.
 The code must be valid, safe, and ready to run inside an Odoo server action.
@@ -25,48 +17,56 @@ Here is the prompt:
 {input_prompt}
 """
 
-prompt = ChatPromptTemplate.from_template(template)
-chain = prompt | model
+def save_local_dataset(data):
+    with open("raw_dataset.jsonl", "a", encoding="utf-8") as f:
+        f.write(json.dumps(data) + "\n")
 
-input_prompt = input("Prompt: ")
-result = chain.invoke(
-    {
-        "input_prompt": input_prompt,
-    }
-)
-print(result)
+def save_training_dataset(data_ollama_format):
+    with open("training_dataset.jsonl", "a", encoding="utf-8") as f:
+        f.write(json.dumps(data_ollama_format) + "\n")
 
-# ask for feedback to train
-feedback = input("Satisfied? (yes/no/fix): ")
+def generate_code(input_prompt):
+    prompt = ChatPromptTemplate.from_template(TEMPLATE)
+    chain = prompt | MODEL
 
-if feedback == "yes":
-    save_local_dataset({
-        "prompt": input_prompt,
-        "result": result,
-        "feedback": "accepted"
-    })
-    save_training_dataset({
-        "prompt": input_prompt,
-        "completion": result
-    })
+    result = chain.invoke(
+        {
+            "input_prompt": input_prompt,
+        }
+    )
+    print(result)
 
-elif feedback == "no":
-    save_local_dataset({
-        "prompt": input_prompt,
-        "result": result,
-        "feedback": "refused"
-    })
-    # on save pas dans le training
+    # ask for feedback to train
+    feedback = input("Satisfied? (yes/no/fix): ")
 
-elif feedback == "fix":
-    correction = input("Type the corrected code: ")
-    save_local_dataset({
-        "prompt": input_prompt,
-        "result": result,
-        "feedback": "corrected",
-        "correction": correction
-    })
-    save_training_dataset({
-        "prompt": input_prompt,
-        "completion": correction
-    })
+    if feedback == "yes":
+        save_local_dataset({
+            "prompt": input_prompt,
+            "result": result,
+            "feedback": "accepted"
+        })
+        save_training_dataset({
+            "prompt": input_prompt,
+            "completion": result
+        })
+
+    elif feedback == "no":
+        save_local_dataset({
+            "prompt": input_prompt,
+            "result": result,
+            "feedback": "refused"
+        })
+        # on save pas dans le training
+
+    elif feedback == "fix":
+        correction = input("Type the corrected code: ")
+        save_local_dataset({
+            "prompt": input_prompt,
+            "result": result,
+            "feedback": "corrected",
+            "correction": correction
+        })
+        save_training_dataset({
+            "prompt": input_prompt,
+            "completion": correction
+        })
