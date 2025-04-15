@@ -1,7 +1,7 @@
 from langchain_ollama.llms import OllamaLLM
 from langchain_core.prompts import ChatPromptTemplate
 
-model = OllamaLLM(model="codestral")
+model = OllamaLLM(model="codellama:7b")
 
 template = """
 You are an expert Odoo backend developer.
@@ -16,11 +16,15 @@ Here is the prompt:
 {input_prompt}
 """
 
-prompt = ChatPromptTemplate(template)
+prompt = ChatPromptTemplate.from_template(template)
 chain = prompt | model
 
-result = chain.invoke(
-    {
-        "input_prompt": "Create a method that returns the name of the partner with ID 1",
-    }
-)
+try:
+    result = chain.invoke(
+        {
+            "input_prompt": "Return the name of the partner with ID 1",
+        }
+    )
+    print(result)
+except Exception as e:
+    print(f"An error occurred: {e}")
