@@ -1,9 +1,36 @@
+import os
+os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
+
 from langchain_ollama.llms import OllamaLLM
 from langchain_core.prompts import ChatPromptTemplate
 import json
 import os
 
-MODEL = OllamaLLM(model="codellama:7b")
+# MODEL = OllamaLLM(model="codellama:7b")
+
+from transformers import AutoTokenizer, AutoModelForCausalLM, pipeline
+from peft import PeftModel
+from langchain.llms import HuggingFacePipeline
+import torch
+
+def load_finetuned_model():
+    adapter_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "codegen_lora_adapter"))
+    
+    base_model = AutoModelForCausalLM.from_pretrained(
+        "Salesforce/codegen-350M-mono",
+        device_map="cpu"
+    )
+    model = PeftModel.from_pretrained(
+        base_model,
+        adapter_path,
+        device_map="cpu"
+    )
+    tokenizer = AutoTokenizer.from_pretrained(adapter_path)
+
+    pipe = pipeline("text-generation", model=model, tokenizer=tokenizer, max_new_tokens=300)
+    return HuggingFacePipeline(pipeline=pipe)
+
+MODEL = load_finetuned_model()
 
 TEMPLATE = """
 You are an expert Odoo backend developer.

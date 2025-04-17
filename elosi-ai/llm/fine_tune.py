@@ -4,7 +4,6 @@ from transformers import AutoTokenizer, AutoModelForCausalLM, TrainingArguments,
 from peft import get_peft_model, LoraConfig, TaskType
 import torch
 
-# Load your dataset
 def load_data(path):
     with open(path, "r", encoding="utf-8") as f:
         lines = [json.loads(line.strip()) for line in f if line.strip()]
@@ -12,12 +11,14 @@ def load_data(path):
 
 dataset = load_data("training_dataset.jsonl")
 
-# Load tokenizer and model
-model_name = "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
-tokenizer = AutoTokenizer.from_pretrained(model_name)
-model = AutoModelForCausalLM.from_pretrained(model_name, device_map="auto", torch_dtype=torch.float16)
+model_name = "Salesforce/codegen-350M-mono"
 
-# Apply LoRA
+tokenizer = AutoTokenizer.from_pretrained(model_name)
+if tokenizer.pad_token is None:
+    tokenizer.pad_token = tokenizer.eos_token
+
+model = AutoModelForCausalLM.from_pretrained(model_name)
+
 peft_config = LoraConfig(
     task_type=TaskType.CAUSAL_LM,
     inference_mode=False,
@@ -28,18 +29,17 @@ peft_config = LoraConfig(
 
 model = get_peft_model(model, peft_config)
 
-# Preprocessing function
 def tokenize(sample):
     full_prompt = f"### Prompt:\n{sample['prompt']}\n\n### Completion:\n{sample['completion']}"
     tokenized = tokenizer(full_prompt, truncation=True, padding="max_length", max_length=512)
     tokenized["labels"] = tokenized["input_ids"].copy()
+    tokenized["labels"] = [label if label != tokenizer.pad_token_id else -100 for label in tokenized["labels"]]
     return tokenized
 
 tokenized_dataset = dataset.map(tokenize, remove_columns=["prompt", "completion"])
 
-# Training arguments
 args = TrainingArguments(
-    output_dir="./tinyllama_lora",
+    output_dir="./codegen_lora_training_output",
     num_train_epochs=3,
     per_device_train_batch_size=1,
     gradient_accumulation_steps=4,
@@ -50,7 +50,6 @@ args = TrainingArguments(
     report_to="none"
 )
 
-# Trainer
 trainer = Trainer(
     model=model,
     args=args,
@@ -61,7 +60,7 @@ trainer = Trainer(
 
 trainer.train()
 
-# Save the adapter
-model.save_pretrained("tinyllama_lora_adapter")
-tokenizer.save_pretrained("tinyllama_lora_adapter")
-print("✅ Adapter saved in tinyllama_lora_adapter/")
+model.save_pretrained("codegen_lora_adapter")
+tokenizer.save_pretrained("codegen_lora_adapter")
+print("✅ Adapter saved in codegen_lora_adapter/")
+# ------------------------------------
