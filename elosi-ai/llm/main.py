@@ -6,7 +6,7 @@ from langchain_core.prompts import ChatPromptTemplate
 import json
 import os
 
-MODEL = OllamaLLM(model="codellama:7b")
+# MODEL = OllamaLLM(model="codellama:7b")
 
 from transformers import AutoTokenizer, AutoModelForCausalLM, pipeline
 from peft import PeftModel
@@ -82,7 +82,7 @@ def feedback(value, input_prompt, result):
         })
         save_training_dataset({
             "prompt": input_prompt,
-            "completion": result
+            "completion": result + " ###"
         })
 
     elif value == "no":
