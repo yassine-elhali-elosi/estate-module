@@ -1,2 +1,3 @@
 {"prompt": "Give me the name of the partner with ID 1", "completion": "\ndef get_partner_name(env, id):\n    return env['res.partner'].browse(id).name"}
 {"prompt": "name of partner with ID 2?", "completion": "\n@api.multi\ndef _name_of_partner_with_id_2(self):\n    for partner in self.env['res.partner'].search([('id', '=', 2)]):\n        return partner.name"}
+

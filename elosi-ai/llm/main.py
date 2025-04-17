@@ -6,7 +6,7 @@ from langchain_core.prompts import ChatPromptTemplate
 import json
 import os
 
-# MODEL = OllamaLLM(model="codellama:7b")
+MODEL = OllamaLLM(model="codellama:7b")
 
 from transformers import AutoTokenizer, AutoModelForCausalLM, pipeline
 from peft import PeftModel
@@ -32,7 +32,7 @@ def load_finetuned_model():
 
 MODEL = load_finetuned_model()
 
-TEMPLATE = """
+SYSTEM = """
 You are an expert Odoo backend developer.
 Only return the Python code — no explanations, no comments.
 The code must be valid, safe, and ready to run inside an Odoo server action.
@@ -40,11 +40,7 @@ You understand models like res.partner, sale.order, crm, and typical business fl
 Always assume the env variable is available.
 Use clear logic and avoid hardcoded IDs.
 Import libraries where necessary.
-**Do not include** quotes before and after the code, it should be pure code and ready to execute.
-
-Here is the prompt:
-{input_prompt}
-"""
+**Do not include** quotes before and after the code, it should be pure code and ready to execute."""
 
 def save_local_dataset(data):
     print("Saving local dataset...", data)
@@ -61,7 +57,8 @@ def save_training_dataset(data_ollama_format):
         f.flush()
 
 def generate_code(input_prompt):
-    prompt = ChatPromptTemplate.from_template(TEMPLATE)
+    prompt_template = f"<s>[INST] <<SYS>>\\n{SYSTEM}\\n<<SYS>>\\n\\n{input_prompt}[/INST]"
+    prompt = ChatPromptTemplate.from_template(prompt_template)
     chain = prompt | MODEL
 
     result = chain.invoke(
