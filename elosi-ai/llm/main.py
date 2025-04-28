@@ -1,7 +1,11 @@
 from transformers import AutoTokenizer, AutoModelForCausalLM
+import os
 
-tokenizer = AutoTokenizer.from_pretrained("./fine_tuned_odoo_model")
-model = AutoModelForCausalLM.from_pretrained("./fine_tuned_odoo_model")
+current_dir = os.path.dirname(os.path.abspath(__file__))
+model_path = os.path.join(current_dir, "fine-tuned-odoo-model")
+
+tokenizer = AutoTokenizer.from_pretrained(model_path, local_files_only=True)
+model = AutoModelForCausalLM.from_pretrained(model_path, local_files_only=True)
 
 question = "How many delivery orders are there in the system?"
 input_text = f"### Input:\n{question}\n### Instruction:"
