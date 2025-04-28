@@ -10,7 +10,7 @@ load_dotenv()
 
 class ElosiAI(models.Model):
     _name = "elosi.ai"
-    _description = "Elosi AI for ir.actions.server"
+    _description = "Elosi AI assistant"
 
     input_prompt = fields.Text("Input Prompt")
     output_prompt = fields.Text("Output Prompt", store=True)
