@@ -27,7 +27,7 @@ class ElosiAI(models.Model):
 
         llm_response = llm.generate_code(self.input_prompt)
 
-        print("Response from LLM:", llm_response)
+        #print("Response from LLM:", llm_response)
 
         self.output_prompt = llm_response
         self.state = 'generated'
