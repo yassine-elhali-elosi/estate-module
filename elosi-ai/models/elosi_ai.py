@@ -25,12 +25,20 @@ class ElosiAI(models.Model):
         print("Generating code for:", self.input_prompt)
         self.output_prompt = "Generating code..."
 
-        llm_response = llm.generate_code(self.input_prompt)
-
-        #print("Response from LLM:", llm_response)
-
-        self.output_prompt = llm_response
-        self.state = 'generated'
+        try:
+            # Get response from LLM
+            llm_response = llm.generate_code(self.input_prompt)
+            
+            # Clean up the response if needed
+            if "###" in llm_response:
+                # Only take content up to the next markdown header
+                llm_response = llm_response.split("###")[0].strip()
+                
+            self.output_prompt = llm_response
+            self.state = 'generated'
+        except Exception as e:
+            self.output_prompt = f"Error generating code: {str(e)}"
+            self.state = 'generated'
         
         return {
             'type': 'ir.actions.act_window',

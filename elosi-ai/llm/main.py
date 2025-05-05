@@ -9,11 +9,8 @@ tokenizer = AutoTokenizer.from_pretrained(model_path)
 model = AutoModelForCausalLM.from_pretrained(model_path)
 
 def generate_code(prompt):
-    # Remove indentation and use a clean format
-    input_text = f"""### system:
-You are an assistant that generates Odoo server actions using Python.
-
-### input:
+    # Clean format without any indentation
+    input_text = f"""### input:
 {prompt}
 
 ### output:"""
@@ -22,22 +19,34 @@ You are an assistant that generates Odoo server actions using Python.
     generated_ids = model.generate(
         input_ids=input_ids.input_ids, 
         attention_mask=input_ids.attention_mask, 
-        max_new_tokens=300,
+        max_new_tokens=150,  # Reduce max tokens to prevent wandering
         pad_token_id=tokenizer.eos_token_id,
-        # Add parameters to improve generation quality
-        do_sample=True,
-        temperature=0.7,
-        top_p=0.95,
-        #repetition_penalty=1.2,
-        # Add a stopping criteria
-        eos_token_id=tokenizer.encode("### system")[0]  # Stop when it tries to start a new system block
+        # Lower temperature for more deterministic output
+        do_sample=False,  # Switch to greedy decoding
+        num_beams=3,  # Use beam search instead
+        repetition_penalty=1.5,  # Increase repetition penalty
+        # Stop at specific tokens
+        eos_token_id=tokenizer.eos_token_id
     )
 
     response = tokenizer.decode(generated_ids[0], skip_special_tokens=True)
     print("Raw response:")
     print(response)
-
-    return response
+    
+    # Extract only the output section
+    try:
+        parts = response.split("### output:")
+        if len(parts) > 1:
+            output = parts[1].strip()
+            # Remove any text after another section marker if present
+            if "###" in output:
+                output = output.split("###")[0].strip()
+            return output
+        else:
+            return response  # Return the whole response if parsing fails
+    except Exception as e:
+        print(f"Error parsing response: {e}")
+        return response
 
 def feedback(input_prompt, output_prompt):
     # stores feedback in a json file for future training
