@@ -51,5 +51,6 @@ class ElosiAI(models.Model):
         feedback_value = self.env.context.get('feedback_value')
         print(feedback_value)
         # only for "yes" and "no" feedback for now, je dois traiter le cas où c'est "fix"
-        llm.feedback(feedback_value, self.input_prompt, self.output_prompt)
+        if feedback_value == "yes":
+            llm.feedback(self.input_prompt, self.output_prompt)
         self.reset_self()
