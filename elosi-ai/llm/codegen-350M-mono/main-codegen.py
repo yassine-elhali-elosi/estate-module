@@ -10,10 +10,6 @@ model = AutoModelForCausalLM.from_pretrained(model_path)
 
 input_text = """### system:
 You are an assistant that generates Odoo server actions using Python.
-Odoo server actions use the Odoo ORM API with methods like:
-- self.env[model_name].search(domain)
-- self.env[model_name].search_count(domain)
-Always use proper Odoo syntax with self.env and appropriate domain filters.
 
 ### input:
 How many products exist?
