@@ -1,0 +1,5 @@
+{"input_prompt": "List all opportunities in "new" state and that are in my pipeline", "output_prompt": "opportunities_in_new = self.env['crm.lead'].search([
+    ('type', '=', 'opportunity'),
+    ('stage_id.name', '=', 'New'),
+    ('user_id', '=', self.env.user.id)  # Filtering for "my pipeline" - assigned to current user
+])"}

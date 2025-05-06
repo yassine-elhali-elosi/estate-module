@@ -56,5 +56,5 @@ def feedback(input_prompt, output_prompt):
     }
     feedback_file = os.path.join(current_dir, "feedback.json")
     with open(feedback_file, "a") as f:
-        f.write(str(feedback_data) + "\n")
-    print("Feedback stored:", feedback_data)
+        f.write("{\"input_prompt\": \"" + input_prompt + "\", \"output_prompt\": \"" + output_prompt + "\"}\n")
+    #print("Feedback stored:", feedback_data)
