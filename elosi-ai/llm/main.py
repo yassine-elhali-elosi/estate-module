@@ -49,11 +49,7 @@ def generate_code(prompt):
         return response
 
 def feedback(input_prompt, output_prompt):
-    # stores feedback in a json file for future training
-    feedback_data = {
-        "input_prompt": input_prompt,
-        "output_prompt": output_prompt
-    }
+    input_prompt = input_prompt.replace('"', '\\"')
     feedback_file = os.path.join(current_dir, "feedback.json")
     with open(feedback_file, "a") as f:
         f.write("{\"input_prompt\": \"" + input_prompt + "\", \"output_prompt\": \"" + output_prompt + "\"}\n")
