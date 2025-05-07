@@ -53,10 +53,10 @@ def feedback(feedback_value, input_prompt, output_prompt):
 
     feedback_raw_file = os.path.join(current_dir, "feedback_raw.json")
     with open(feedback_raw_file, "a") as f:
-        f.write("{\"feedback_value\": \"" + feedback_value + "\", \"input_prompt\": \"" + input_prompt + "\", \"output_prompt\": \"" + output_prompt + "\"}\n")
+        f.write("{\"feedback_value\": \"" + feedback_value + "\", \"input\": \"" + input_prompt + "\", \"output\": \"" + output_prompt + "\"}\n")
 
     if feedback_value == "yes":
         feedback_file = os.path.join(current_dir, "feedback.json")
         with open(feedback_file, "a") as f:
-            f.write("{\"input_prompt\": \"" + input_prompt + "\", \"output_prompt\": \"" + output_prompt + "\"}\n")
+            f.write("{\"input\": \"" + input_prompt + "\", \"output\": \"" + output_prompt + "\"}\n")
     #print("Feedback stored:", feedback_data)

@@ -1,1 +1,1 @@
-{"feedback_value": "no", "input_prompt": "Which product has the most inventory stock?", "output_prompt": "product = self.env['product.product'].search([('list_price', '>', 0)], order='list_price desc', limit=1)"}
+{"feedback_value": "no", "input": "Which product has the most inventory stock?", "output": "product = self.env['product.product'].search([('list_price', '>', 0)], order='list_price desc', limit=1)"}
