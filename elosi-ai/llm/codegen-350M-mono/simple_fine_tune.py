@@ -71,6 +71,9 @@ training_args = TrainingArguments(
     warmup_steps=100,
     save_strategy="epoch",
     eval_steps=10 if useFeedback == "y" else None,
+    logging_steps=10,
+    learning_rate=5e-5,
+    fp16=True
 )
 
 trainer = Trainer(
