@@ -4,8 +4,6 @@ from transformers import AutoTokenizer, AutoModelForCausalLM, TrainingArguments,
 from datasets import load_from_disk
 
 dataset = load_dataset("yelosi/odoo-ir-actions-server")
-print("Dataset loaded")
-print("Dataset structure:", dataset)  # Print dataset structure to understand what we're working with
 
 # dataset = load_from_disk('ir_actions_server_dataset')
 # print("Custom ir.actions.server dataset loaded")
@@ -44,33 +42,11 @@ def format_and_tokenize(examples):
     
     return encoded
 
-# Process each split in the dataset
-tokenized_dataset = {}
-for split in dataset.keys():
-    tokenized_dataset[split] = dataset[split].map(
-        format_and_tokenize,
-        batched=True,
-        remove_columns=dataset[split].column_names
-    )
-
-# If the dataset doesn't already have train/test splits, create them
-if 'train' not in tokenized_dataset:
-    if 'train' not in dataset:
-        # If there's no explicit train split, use the first available split and create a train/test split
-        first_split = list(dataset.keys())[0]
-        train_test = dataset[first_split].train_test_split(test_size=0.1)
-        tokenized_dataset = {
-            'train': train_test['train'].map(
-                format_and_tokenize,
-                batched=True,
-                remove_columns=train_test['train'].column_names
-            ),
-            'test': train_test['test'].map(
-                format_and_tokenize,
-                batched=True,
-                remove_columns=train_test['test'].column_names
-            )
-        }
+tokenized_dataset = dataset.map(
+    format_and_tokenize,
+    batched=True,
+    remove_columns=dataset["train"].column_names
+)
 
 # le training
 output_dir = "./fine-tuned-codegen-350M-mono"
@@ -87,8 +63,7 @@ training_args = TrainingArguments(
 trainer = Trainer(
     model=model,
     args=training_args,
-    train_dataset=tokenized_dataset['train'],
-    eval_dataset=tokenized_dataset['test'] if 'test' in tokenized_dataset else None,
+    train_dataset=tokenized_dataset['train']
 )
 
 trainer.train()
