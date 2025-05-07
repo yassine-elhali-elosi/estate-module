@@ -3,7 +3,12 @@ from transformers import AutoTokenizer, AutoModelForCausalLM, TrainingArguments,
 
 from datasets import load_from_disk
 
-dataset = load_dataset("yelosi/odoo-ir-actions-server")
+useFeedback = input("Use feedback dataset? (y/n): ")
+if useFeedback == "y":
+    dataset = load_dataset("json", data_files="../feedback.json")
+else:
+    dataset = load_dataset("yelosi/odoo-ir-actions-server")
+print(dataset)
 
 # dataset = load_from_disk('ir_actions_server_dataset')
 # print("Custom ir.actions.server dataset loaded")
