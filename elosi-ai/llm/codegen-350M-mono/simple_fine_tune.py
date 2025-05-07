@@ -1,14 +1,20 @@
-from datasets import load_dataset
+from datasets import load_dataset, Dataset
 from transformers import AutoTokenizer, AutoModelForCausalLM, TrainingArguments, Trainer
 
 from datasets import load_from_disk
 
 useFeedback = input("Use feedback dataset? (y/n): ")
 if useFeedback == "y":
-    dataset = load_dataset("json", data_files="../feedback.json")
+    feedback_dataset = load_dataset("json", data_files="../feedback.json")
+    odoo_dataset = load_dataset("yelosi/odoo-ir-actions-server")
+    
+    combined_data = {
+        'input': feedback_dataset['train']['input'] + odoo_dataset['train']['input'],
+        'output': feedback_dataset['train']['output'] + odoo_dataset['train']['output']
+    }
+    dataset = Dataset.from_dict(combined_data)
 else:
     dataset = load_dataset("yelosi/odoo-ir-actions-server")
-print(dataset)
 
 # dataset = load_from_disk('ir_actions_server_dataset')
 # print("Custom ir.actions.server dataset loaded")
@@ -25,14 +31,15 @@ if tokenizer.pad_token is None:
 def format_and_tokenize(examples):
     formatted_texts = []
 
+    # Remove this line as it's causing confusion
+    # print(examples['train'])
+    
     for i in range(len(examples['input'])):
         text = (
             f"### input:\n{examples['input'][i]}\n"
             f"### output:\n{examples['output'][i]}\n\n"
         )
         formatted_texts.append(text)
-
-    #print(formatted_texts)
 
     encoded = tokenizer(
         formatted_texts,
@@ -50,7 +57,7 @@ def format_and_tokenize(examples):
 tokenized_dataset = dataset.map(
     format_and_tokenize,
     batched=True,
-    remove_columns=dataset["train"].column_names
+    remove_columns=['input', 'output']
 )
 
 # le training
@@ -59,16 +66,18 @@ output_dir = "./fine-tuned-codegen-350M-mono"
 
 training_args = TrainingArguments(
     output_dir=output_dir,
-    num_train_epochs=5,
+    num_train_epochs=3,
     per_device_train_batch_size=4,
     warmup_steps=100,
     save_strategy="epoch",
+    eval_steps=10 if useFeedback == "y" else None,
 )
 
 trainer = Trainer(
     model=model,
     args=training_args,
-    train_dataset=tokenized_dataset['train']
+    train_dataset=tokenized_dataset,
+    eval_dataset=None 
 )
 
 trainer.train()
