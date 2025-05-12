@@ -1,3 +1,4 @@
 {"feedback_value": "no", "input": "Which product has the most inventory stock?", "output": "product = self.env['product.product'].search([('list_price', '>', 0)], order='list_price desc', limit=1)"}
 {"feedback_value": "yes", "input": "list all projects that have \"External\" tag", "output": "external_projects = self.env['project.project'].search([('stage_id.is_external', '=', True), ('stage_id.name', '=', 'External')])"}
 {"feedback_value": "yes", "input": "list all projects that have \"Not Internal\" tag", "output": "not_internal_projects = self.env['project.project'].search([('stage_id.is_internal', '=', True), ('stage_id.name', '=', 'Not Internal')])"}
+{"feedback_value": "no", "input": "list all opportunities that are in my pipeline and won", "output": "opportunities_in_my_pipeline = self.env['crm.lead'].search([('type', '=', 'opportunity'), ('stage_id.is_won', '=', True)])"}
